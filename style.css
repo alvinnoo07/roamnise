@@ -2531,12 +2531,157 @@ h1, h2, h3, h4, h5, p {
 }
 
 @media (max-width: 580px) {
+    html {
+        scroll-padding-top: 76px;
+    }
+
     .section-wrap {
         width: 92%;
     }
 
+    .hero {
+        min-height: 0;
+        gap: 32px;
+        padding-top: 42px;
+        padding-bottom: 48px;
+    }
+
     .hero h1 {
-        font-size: clamp(38px, 11vw, 54px);
+        font-size: clamp(36px, 10.5vw, 48px);
+    }
+
+    .hero-actions .button {
+        width: 100%;
+    }
+
+    .hero-visual {
+        min-height: 420px;
+    }
+
+    .visual-topline {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px 14px 10px;
+        font-size: 9px;
+        letter-spacing: 0.04em;
+    }
+
+    .menu-toggle {
+        width: 44px;
+        height: 44px;
+    }
+
+    .main-nav .sound-toggle {
+        min-height: 44px;
+    }
+
+    .map-phase-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 8px 12px;
+    }
+
+    .phase-tab {
+        min-height: 36px;
+        white-space: normal;
+    }
+
+    .map-grid {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .radar-briefing {
+        margin-right: 10px;
+        margin-left: 10px;
+        padding: 10px;
+    }
+
+    .principles,
+    .hero-roster-section,
+    .item-guide-section {
+        padding-top: 56px;
+        padding-bottom: 60px;
+    }
+
+    .rotation-layout,
+    .practice-layout {
+        padding-top: 56px;
+        padding-bottom: 60px;
+    }
+
+    .draft-helper-section {
+        padding-top: 56px;
+        padding-bottom: 60px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 28px;
+    }
+
+    .section-heading > * {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .section-heading h2 {
+        font-size: clamp(30px, 8vw, 38px);
+    }
+
+    .section-intro {
+        max-width: none;
+        font-size: 13px;
+    }
+
+    .roster-toolbar {
+        padding: 14px;
+    }
+
+    .filter-group-wrap {
+        align-items: stretch;
+    }
+
+    .filter-subroles {
+        width: 100%;
+    }
+
+    .filter-pill {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .custom-select {
+        width: 100%;
+    }
+
+    .draft-output-card {
+        padding: 18px;
+    }
+
+    .checklist-actions {
+        flex-wrap: wrap;
+    }
+
+    .button-reset,
+    .button-copy {
+        flex: 1 1 130px;
+        min-height: 40px;
+    }
+
+    .hero-modal-backdrop {
+        padding: 10px;
+    }
+
+    .hero-modal-content {
+        max-height: 94vh;
+        padding: 24px 18px;
+    }
+
+    .modal-close-btn {
+        top: 12px;
+        right: 12px;
     }
 
     .hero-roster-grid {
@@ -2561,10 +2706,6 @@ h1, h2, h3, h4, h5, p {
     .build-grid,
     .draft-gear-advice {
         grid-template-columns: 1fr;
-    }
-
-    .map-phase-tabs {
-        grid-template-columns: repeat(2, 1fr);
     }
 }
 

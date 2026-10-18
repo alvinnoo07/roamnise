@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#10130f">
+    <meta name="description" content="Roamwise — Panduan komprehensif dan interaktif untuk menguasai role Roamer dan Hero Tank di Mobile Legends: Bang Bang. Roster hero tank lengkap, simulasi rotasi, asisten draft, dan rekomendasi build.">
+    <title>Roamwise — Panduan Interaktif Roamer & Hero Tank MLBB</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Header & Navigasi -->
+    <header class="site-header">
+        <a class="brand" href="#beranda" aria-label="Roamwise, kembali ke beranda">
+            <span class="brand-mark" aria-hidden="true">R</span>
+            <span>ROAM<span class="brand-accent">WISE</span></span>
+        </a>
+
+        <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
+            <a href="#dasar">Dasar Roam</a>
+            <a href="#rotasi">Peta &amp; Rotasi</a>
+            <a href="#hero-roster">Hero Tank</a>
+            <a href="#draft-helper">Asisten Draft</a>
+            <a href="#item-guide">Item &amp; Blessing</a>
+            <a href="#latihan">Checklist Latihan</a>
+            <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="true" title="Toggle Efek Suara Radar">
+                <span class="sound-icon" aria-hidden="true">🔊</span>
+                <span class="sound-text">SFX: ON</span>
+            </button>
+            <a class="nav-cta" href="#hero-roster">Pilih Hero <span aria-hidden="true">↗</span></a>
+        </nav>
+
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+            <span class="menu-icon" aria-hidden="true"></span>
+            <span class="sr-only">Buka navigasi</span>
+        </button>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero section-wrap" id="beranda">
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="eyebrow-dot"></span> PANDUAN ROLE ROAM &amp; TANK · MLBB</p>
+                <h1>Roamer hebat<br>selalu <span>selangkah<br>lebih dulu.</span></h1>
+                <p class="hero-description">Bukan soal kill terbanyak. Roamer sejati memberikan vision, mengendalikan tempo pertempuran, dan membuka ruang kemenangan bagi seluruh tim.</p>
+                
+                <div class="stat-pills" aria-label="Statistik panduan">
+                    <div class="stat-pill"><strong>20+</strong><span>Hero Tank &amp; Roam</span></div>
+                    <div class="stat-pill"><strong>4</strong><span>Fase Rotasi Taktis</span></div>
+                    <div class="stat-pill"><strong>100%</strong><span>Interaktif &amp; Lengkap</span></div>
+                </div>
+
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#hero-roster">Jelajahi Hero Tank 🛡️</a>
+                    <a class="button button-secondary" href="#draft-helper">Asisten Counter Draft ⚔️</a>
+                    <a class="text-link" href="#rotasi">Simulasi Minimap <span>→</span></a>
+                </div>
+
+                <!-- Spotlight Hero Tank Avatars di Awal Halaman -->
+                <div class="hero-tank-spotlight">
+                    <span class="spotlight-title">HERO TANK PILIHAN:</span>
+                    <div class="spotlight-avatars">
+                        <a href="#hero-roster" class="spotlight-item" data-hero-id="tigreal" title="Tigreal - Inisiator Mass Setter">
+                            <img src="assets/heroes/tigreal.png" alt="Tigreal" width="40" height="40">
+                            <span>Tigreal</span>
+                        </a>
+                        <a href="#hero-roster" class="spotlight-item" data-hero-id="khufra" title="Khufra - Anti-Dash">
+                            <img src="assets/heroes/khufra.png" alt="Khufra" width="40" height="40">
+                            <span>Khufra</span>
+                        </a>
+                        <a href="#hero-roster" class="spotlight-item" data-hero-id="atlas" title="Atlas - Fatal Links">
+                            <img src="assets/heroes/atlas.png" alt="Atlas" width="40" height="40">
+                            <span>Atlas</span>
+                        </a>
+                        <a href="#hero-roster" class="spotlight-item" data-hero-id="franco" title="Franco - Hook Suppress">
+                            <img src="assets/heroes/franco.png" alt="Franco" width="40" height="40">
+                            <span>Franco</span>
+                        </a>
+                        <a href="#hero-roster" class="spotlight-item" data-hero-id="lolita" title="Lolita - Reflector">
+                            <img src="assets/heroes/lolita.png" alt="Lolita" width="40" height="40">
+                            <span>Lolita</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-note">
+                    <span class="note-icon" aria-hidden="true">✳</span>
+                    <p><strong>Misi Roamer:</strong> Amankan map, lindungi damage dealer, dan eksekusi momen objektif.</p>
+                </div>
+            </div>
+
+            <!-- Interactive Minimap & Radar -->
+            <div class="hero-visual" id="interactive-radar" aria-label="Simulasi radar peta interaktif roamer MLBB">
+                <div class="visual-topline">
+                    <span class="live-badge"><i class="radar-dot"></i> RADAR TAKTIS LAND OF DAWN</span>
+                    <span id="active-phase-tag">FASE 1 / 04</span>
+                </div>
+
+                <!-- Phase selector tabs inside map -->
+                <div class="map-phase-tabs" role="tablist" aria-label="Pilih fase rotasi radar">
+                    <button class="phase-tab is-active" type="button" role="tab" data-phase="early" aria-selected="true">01. Early Clear</button>
+                    <button class="phase-tab" type="button" role="tab" data-phase="turtle" aria-selected="false">02. Setup Turtle</button>
+                    <button class="phase-tab" type="button" role="tab" data-phase="mid" aria-selected="false">03. Mid Pressure</button>
+                    <button class="phase-tab" type="button" role="tab" data-phase="late" aria-selected="false">04. Late Lord</button>
+                </div>
+
+                <!-- Map Canvas Grid -->
+                <div class="map-grid" id="radar-map">
+                    <span class="map-lane lane-one"></span>
+                    <span class="map-lane lane-two"></span>
+                    <span class="map-lane lane-three"></span>
+                    <span class="map-river"></span>
+                    
+                    <!-- Interactive Nodes -->
+                    <button class="map-node node-gold" type="button" data-node="gold" title="Klik info Gold Lane">
+                        <i></i><small>GOLD</small>
+                    </button>
+                    <button class="map-node node-mid" type="button" data-node="mid" title="Klik info Mid Lane">
+                        <i></i><small>MID</small>
+                    </button>
+                    <button class="map-node node-turtle" type="button" data-node="turtle" title="Klik info Turtle Pit">
+                        <i></i><small>TURTLE</small>
+                    </button>
+                    <button class="map-node node-lord" type="button" data-node="lord" title="Klik info Lord Pit">
+                        <i></i><small>LORD</small>
+                    </button>
+                    <button class="map-node node-river-bush" type="button" data-node="bush" title="Klik info River Bush">
+                        <i></i><small>SEMAK</small>
+                    </button>
+                    <button class="map-node node-invade" type="button" data-node="invade" title="Klik info Jungle Lawan">
+                        <i></i><small>INVADE</small>
+                    </button>
+
+                    <!-- Player Node with Hero Avatar Pin -->
+                    <div class="map-node node-you" id="roamer-pin" title="Posisi Roamer">
+                        <img class="roamer-pin-avatar" src="assets/heroes/tigreal.png" alt="Roamer Pin" width="22" height="22">
+                        <small>ROAMER</small>
+                    </div>
+
+                    <!-- Dynamic Routes -->
+                    <span class="map-route route-one" id="route-line-1"></span>
+                    <span class="map-route route-two" id="route-line-2"></span>
+                </div>
+
+                <!-- Radar Intel Briefing Card -->
+                <div class="radar-briefing" id="radar-briefing">
+                    <div class="briefing-header">
+                        <span class="caption-signal" aria-hidden="true"></span>
+                        <strong id="briefing-title">Early Game: Clear Mid &amp; Cek Buff</strong>
+                        <span class="danger-tag low" id="briefing-risk">RISIKO: RENDAH</span>
+                    </div>
+                    <p id="briefing-desc">Bantu mage bersihkan gelombang minion pertama dalam 10 detik. Jangan ambil minion! Langsung intip apakah jungler lawan mulai dari buff merah atau biru.</p>
+                </div>
+
+                <div class="visual-caption">
+                    <span class="interactive-hint">💡 Klik titik map (Gold, Mid, Turtle, Semak) atau pilih fase di atas untuk melihat instruksi taktikal.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 01: Dasar Roam -->
+        <section class="principles section-wrap" id="dasar">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">01 — PEGANGAN UTAMA</p>
+                    <h2>Roam itu soal <span>keputusan.</span></h2>
+                </div>
+                <p class="section-intro">Kamu bukan babysitter satu lane. Tugasmu membaca kebutuhan tim dan hadir di tempat yang paling berdampak.</p>
+            </div>
+
+            <div class="principle-grid">
+                <article class="principle-card" tabindex="0">
+                    <span class="card-number">01</span>
+                    <span class="card-icon icon-eye" aria-hidden="true">◉</span>
+                    <h3>Buka Informasi (Vision)</h3>
+                    <p>Cek semak-semak sungai sebelum tim bergerak. Info keberadaan musuh lebih berharga daripada langsung melompat tanpa backup kawan.</p>
+                    <div class="principle-tip">
+                        <strong>Tips Pro:</strong> Pakai skill area untuk memeriksa semak (bush check) bila heromu bukan tank yang sangat tebal.
+                    </div>
+                    <span class="card-tag">VISION CONTROL</span>
+                </article>
+                <article class="principle-card" tabindex="0">
+                    <span class="card-number">02</span>
+                    <span class="card-icon icon-link" aria-hidden="true">↗</span>
+                    <h3>Kendalikan Tempo</h3>
+                    <p>Bantu lane yang sedang ditekan, cover marksman dari bahaya ganking, lalu putar rotasi saat bala bantuanmu sudah cukup.</p>
+                    <div class="principle-tip">
+                        <strong>Tips Pro:</strong> Jangan tinggal diam di satu lane lebih dari 45 detik kecuali saat teamfight besar berlangsung.
+                    </div>
+                    <span class="card-tag">ROTATION TEMPO</span>
+                </article>
+                <article class="principle-card" tabindex="0">
+                    <span class="card-number">03</span>
+                    <span class="card-icon icon-shield" aria-hidden="true">⬡</span>
+                    <h3>Zoning Objektif</h3>
+                    <p>Siapkan zona aman Turtle dan Lord 15 detik sebelum spawn. Halangi jungler lawan masuk ke jangkauan Retribution.</p>
+                    <div class="principle-tip">
+                        <strong>Tips Pro:</strong> Badanin area choke point sempit agar kawan bisa menghabisi objektif tanpa gangguan.
+                    </div>
+                    <span class="card-tag">OBJECTIVE SETUP</span>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section 02: Rotasi dalam Match -->
+        <section class="rotation-section" id="rotasi">
+            <div class="section-wrap rotation-layout">
+                <div class="rotation-copy">
+                    <p class="eyebrow">02 — ALUR DALAM MATCH</p>
+                    <h2>Rotasi yang punya <span>tujuan.</span></h2>
+                    <p class="section-intro">Jangan bergerak cuma karena bosan di lane. Tiap rotasi harus menjawab: siapa yang perlu dibantu, dan apa yang bisa tim dapatkan?</p>
+                    
+                    <div class="rotation-reminder">
+                        <span aria-hidden="true">!</span>
+                        <p><strong>Dinamis &amp; Adaptif:</strong> Panduan ini adalah rute optimal. Bila rekanmu diinvasi atau marksman digank 3 orang, prioritaskan penyelamatan darurat!</p>
+                    </div>
+
+                    <div class="rotation-quick-nav">
+                        <p class="quick-nav-title">KLIK TAHAP UNTUK SIMULASI:</p>
+                        <div class="quick-nav-buttons">
+                            <button class="nav-step-btn is-active" data-step="0">Menit 00:00 - 01:15</button>
+                            <button class="nav-step-btn" data-step="1">Menit 01:45 - 03:00</button>
+                            <button class="nav-step-btn" data-step="2">Menit 04:00 - 09:00</button>
+                            <button class="nav-step-btn" data-step="3">Menit 10:00 - Tamat</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline" id="rotation-timeline">
+                    <article class="timeline-item is-active" data-step="0">
+                        <div class="timeline-marker"><span>01</span></div>
+                        <div class="timeline-content">
+                            <p class="timeline-phase">EARLY GAME (00:00 - 01:15)</p>
+                            <h3>Bantu Mid &amp; Cek Alur Jungler Lawan</h3>
+                            <p>Mulai di Mid Lane. Bantu mage bersihkan minion pertama agar mage level 2 duluan. Lalu cek sungai atau jungle lawan: apakah jungler mereka mulai dari blue atau red buff? Beri info ke Gold Lane jika musuh rotasi ke arahnya.</p>
+                            <div class="timeline-badge">Fokus: Info Posisi &amp; Amankan Lithowanderer</div>
+                        </div>
+                    </article>
+                    <article class="timeline-item" data-step="1">
+                        <div class="timeline-marker"><span>02</span></div>
+                        <div class="timeline-content">
+                            <p class="timeline-phase">MENJELANG TURTLE (01:45 - 03:00)</p>
+                            <h3>Kuasai Semak Turtle 15 Detik Lebih Awal</h3>
+                            <p>Jangan terlambat datang ke Turtle. Berdirilah di semak sisi musuh untuk membatasi pandangan mereka. Usir jungler lawan saat mencoba mendekati pit agar jungler tim kamu bisa mengamankan Retribution dengan tenang.</p>
+                            <div class="timeline-badge">Fokus: Zoning Semak &amp; Lindungi Retri Tim</div>
+                        </div>
+                    </article>
+                    <article class="timeline-item" data-step="2">
+                        <div class="timeline-marker"><span>03</span></div>
+                        <div class="timeline-content">
+                            <p class="timeline-phase">MID GAME (04:00 - 09:00)</p>
+                            <h3>Kawal Win Condition &amp; Ambush Semak</h3>
+                            <p>Temani hero pembawa kemenanganmu. Bila marksman kamu butuh farming, pasang badan di depannya. Bila kamu memakai tank inisiator agresif, ajak mage dan jungler melakukan ganking kejutan dari semak sungai.</p>
+                            <div class="timeline-badge">Fokus: Hancurkan Outer Turret &amp; Kontrol Map</div>
+                        </div>
+                    </article>
+                    <article class="timeline-item" data-step="3">
+                        <div class="timeline-marker"><span>04</span></div>
+                        <div class="timeline-content">
+                            <p class="timeline-phase">LATE GAME (10:00+)</p>
+                            <h3>Disiplin Formasi &amp; Kontrol Lord Pit</h3>
+                            <p>Di late game, satu kesalahan posisi adalah kekalahan. Jangan masuk semak sendirian tanpa kawan siap mem-follow up. Simpan Flicker dan Ultimate untuk mengunci carry lawan atau mematikan inisiasi musuh.</p>
+                            <div class="timeline-badge">Fokus: Kawal Lord Evolved &amp; Satu Pick-off Krusial</div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 03: Roster Lengkap Hero Tank (DENGAN FOTO CROP) -->
+        <section class="hero-roster-section section-wrap" id="hero-roster">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">03 — DATABASE HERO TANK MLBB</p>
+                    <h2>Roster &amp; Crop <span>Hero Tank.</span></h2>
+                </div>
+                <p class="section-intro">Koleksi lengkap hero Tank dan Roamer Mobile Legends dengan foto crop portrait, gaya bermain, build counter, kombo skill maut, dan sinergi terbaik.</p>
+            </div>
+
+            <!-- Roster Controls: Search & Filters -->
+            <div class="roster-toolbar">
+                <div class="search-box">
+                    <span class="search-icon" aria-hidden="true">🔍</span>
+                    <input type="search" id="hero-search" placeholder="Cari nama hero tank, gaya, atau skill (misal: Tigreal, Khufra, Hook, Anti-dash)..." aria-label="Cari hero tank">
+                    <button type="button" id="search-clear" class="search-clear" aria-label="Hapus pencarian" hidden>×</button>
+                </div>
+
+                <div class="filter-group-wrap">
+                    <div class="filter-subroles" role="tablist" aria-label="Filter sub-role hero tank">
+                        <button class="filter-pill is-active" data-filter="all" type="button">Semua (<span id="count-all">20</span>)</button>
+                        <button class="filter-pill" data-filter="inisiator" type="button">Inisiator &amp; CC</button>
+                        <button class="filter-pill" data-filter="pick-off" type="button">Pick-Off</button>
+                        <button class="filter-pill" data-filter="protector" type="button">Protector &amp; Peel</button>
+                        <button class="filter-pill" data-filter="invader" type="button">Invader &amp; Aggro</button>
+                        <button class="filter-pill" data-filter="flex" type="button">Flex &amp; Hybrid</button>
+                    </div>
+
+                    <div class="filter-difficulty-select">
+                        <label for="diff-select" class="sr-only">Tingkat Kesulitan</label>
+                        <select id="diff-select" class="custom-select" aria-label="Filter berdasarkan kesulitan">
+                            <option value="all">Semua Tingkat Kesulitan</option>
+                            <option value="1">Mudah ⭐ (Ramah Pemula)</option>
+                            <option value="2">Sedang ⭐⭐ (Standar Rank)</option>
+                            <option value="3">Tinggi ⭐⭐⭐ (Butuh Mekanik/Makro)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="roster-status-bar">
+                    <span id="roster-result-count">Menampilkan 20 hero tank</span>
+                    <span class="roster-instruction">💡 Klik kartu hero untuk membuka modal panduan build &amp; kombo lengkap!</span>
+                </div>
+            </div>
+
+            <!-- Hero Cards Grid Container -->
+            <div class="hero-roster-grid" id="hero-roster-grid" aria-live="polite">
+                <!-- Injected via JavaScript from HEROES_DATA -->
+            </div>
+        </section>
+
+        <!-- Section 04: Asisten Counter Draft Interaktif -->
+        <section class="draft-helper-section" id="draft-helper">
+            <div class="section-wrap">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">04 — ASISTEN DRAFT MLBB</p>
+                        <h2>Bingung pick apa? <span>Pilih situasi lawanmu.</span></h2>
+                    </div>
+                    <p class="section-intro">Sesuaikan pilihan hero tank dengan komposisi tim musuh. Klik kondisi di bawah ini untuk melihat hero counter terbaik dan alasan taktikalnya!</p>
+                </div>
+
+                <div class="draft-layout">
+                    <div class="draft-scenarios" role="group" aria-label="Pilih ancaman draft lawan">
+                        <button class="scenario-btn is-selected" data-scenario="assassin" type="button">
+                            <span class="scenario-badge">⚡ ANCAMAN 01</span>
+                            <strong>Lawan banyak Assassin lincah &amp; Dash</strong>
+                            <small>Contoh: Fanny, Ling, Joy, Lancelot, Hayabusa, Harith</small>
+                        </button>
+                        <button class="scenario-btn" data-scenario="attackspeed" type="button">
+                            <span class="scenario-badge">🏹 ANCAMAN 02</span>
+                            <strong>Lawan bertumpu pada Marksman Attack Speed</strong>
+                            <small>Contoh: Claude, Miya, Moskov, Wanwan, Bruno, Irithel</small>
+                        </button>
+                        <button class="scenario-btn" data-scenario="magicburst" type="button">
+                            <span class="scenario-badge">🔮 ANCAMAN 03</span>
+                            <strong>Lawan mengandalkan Magic Burst &amp; Proyektil</strong>
+                            <small>Contoh: Chang'e, Pharsa, Novaria, Xavier, Cecilion, Kadita</small>
+                        </button>
+                        <button class="scenario-btn" data-scenario="teamfight" type="button">
+                            <span class="scenario-badge">💥 KEBUTUHAN 04</span>
+                            <strong>Tim butuh Inisiator War Area Besar (5v5)</strong>
+                            <small>Saat timmu punya mage burst AoE seperti Pharsa, Aurora, Odette</small>
+                        </button>
+                        <button class="scenario-btn" data-scenario="invade" type="button">
+                            <span class="scenario-badge">🌲 STRATEGI 05</span>
+                            <strong>Mau Rusuh Jungle Musuh dari Menit Awal</strong>
+                            <small>Ingin membuat jungler musuh miskin dan terlambat naik level</small>
+                        </button>
+                        <button class="scenario-btn" data-scenario="regen" type="button">
+                            <span class="scenario-badge">🩸 ANCAMAN 06</span>
+                            <strong>Lawan punya Healer atau Lifesteal Sangat Deras</strong>
+                            <small>Contoh: Estes, Floryn, Rafaela, Ruby, Yu Zhong, Alucard</small>
+                        </button>
+                    </div>
+
+                    <!-- Draft Assistant Recommendation Output -->
+                    <div class="draft-output-card" id="draft-output-card" aria-live="polite">
+                        <!-- Dynamic Content Rendered by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 05: Panduan Roam Blessing & Counter Item -->
+        <section class="item-guide-section section-wrap" id="item-guide">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">05 — BLESSING &amp; COUNTER ITEM</p>
+                    <h2>Pilihan sepatu &amp; <span>item wajib tank.</span></h2>
+                </div>
+                <p class="section-intro">Jangan beli item yang sama di setiap match! Kenali 4 jenis Roam Blessing dan cara memilih item defense counter yang tepat.</p>
+            </div>
+
+            <!-- Roaming Blessings Tabs -->
+            <div class="blessing-container">
+                <h3 class="subsection-title">4 Tipe Roaming Footwear Blessing</h3>
+                <div class="blessing-grid">
+                    <article class="blessing-card">
+                        <div class="blessing-header">
+                            <span class="blessing-badge conceal">AKTIF</span>
+                            <h4>Conceal (Menghilang)</h4>
+                        </div>
+                        <p class="blessing-desc">Memberi efek kamuflase (menghilang dari radar musuh) dan peningkatan Movement Speed 30%-75% untuk kamu dan kawan di sekitar selama 5 detik.</p>
+                        <div class="blessing-meta">
+                            <span>COOLDOWN: <strong>80 Detik</strong></span>
+                            <span>COCOK UNTUK: <strong>Tigreal, Atlas, Franco, Khufra</strong></span>
+                        </div>
+                    </article>
+
+                    <article class="blessing-card">
+                        <div class="blessing-header">
+                            <span class="blessing-badge encourage">PASIF AURA</span>
+                            <h4>Encourage (Semangat Tempur)</h4>
+                        </div>
+                        <p class="blessing-desc">Meningkatkan Physical Attack &amp; Magic Power serta Attack Speed seluruh rekan satu tim terdekat secara otomatis tanpa perlu tombol aktif.</p>
+                        <div class="blessing-meta">
+                            <span>RADIUS: <strong>Area Luas</strong></span>
+                            <span>COCOK UNTUK: <strong>Hylos, Belerick, Gatotkaca, Edith, Fredrinn</strong></span>
+                        </div>
+                    </article>
+
+                    <article class="blessing-card">
+                        <div class="blessing-header">
+                            <span class="blessing-badge favor">PASIF HEAL</span>
+                            <h4>Favor (Restu Pemulihan)</h4>
+                        </div>
+                        <p class="blessing-desc">Setiap kali kamu menggunakan skill heal atau shield, memulihkan tambahan HP dalam jumlah besar untuk rekan tim dengan persentase HP paling sekarat.</p>
+                        <div class="blessing-meta">
+                            <span>COOLDOWN: <strong>10 Detik</strong></span>
+                            <span>COCOK UNTUK: <strong>Minotaur, Mathilda, Lolita, Rafaela</strong></span>
+                        </div>
+                    </article>
+
+                    <article class="blessing-card">
+                        <div class="blessing-header">
+                            <span class="blessing-badge direhit">PASIF BURST</span>
+                            <h4>Dire Hit (Eksekusi Sekarat)</h4>
+                        </div>
+                        <p class="blessing-desc">Saat menyerang musuh dengan HP di bawah 35%, memberikan tambahan Magic Damage setara 7%-18% dari Max HP musuh. Sangat mematikan untuk pick-off!</p>
+                        <div class="blessing-meta">
+                            <span>COOLDOWN: <strong>30 Detik</strong></span>
+                            <span>COCOK UNTUK: <strong>Grock, Franco, Johnson, Edith, Kaja</strong></span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Counter Item Decision Matrix -->
+            <div class="counter-items-container">
+                <h3 class="subsection-title">Dilema Item Tank: Beli yang Mana?</h3>
+                <div class="decision-grid">
+                    <div class="decision-card">
+                        <div class="decision-header">
+                            <span class="versus-tag">MAGIC DEFENSE</span>
+                            <h4>Athena's Shield vs Radiant Armor</h4>
+                        </div>
+                        <div class="decision-body">
+                            <div class="choice-item">
+                                <strong>Athena's Shield</strong>
+                                <p>Beli saat lawan punya <em>BURST MAGIC</em> instan (sekali kombo mati): Kadita, Eudora, Pharsa, Gusion, Vale, Kagura.</p>
+                            </div>
+                            <div class="choice-divider">VS</div>
+                            <div class="choice-item">
+                                <strong>Radiant Armor</strong>
+                                <p>Beli saat lawan punya <em>CONTINUOUS MAGIC DPS</em> (damage cicil beruntun): Chang'e, Valir, Yve, Kimmy, Aamon, Harley.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="decision-card">
+                        <div class="decision-header">
+                            <span class="versus-tag">PHYSICAL DEFENSE</span>
+                            <h4>Antique Cuirass vs Blade Armor</h4>
+                        </div>
+                        <div class="decision-body">
+                            <div class="choice-item">
+                                <strong>Antique Cuirass</strong>
+                                <p>Beli saat lawan menyerang pakai <em>SKILL PHYSICAL</em>: Hayabusa, Lancelot, Fanny, Saber, Paquito, Yu Zhong.</p>
+                            </div>
+                            <div class="choice-divider">VS</div>
+                            <div class="choice-item">
+                                <strong>Blade Armor</strong>
+                                <p>Beli saat lawan menyerang pakai <em>BASIC ATTACK &amp; CRITICAL</em>: Claude, Miya, Moskov, Bruno, Irithel, Lesley.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="decision-card">
+                        <div class="decision-header">
+                            <span class="versus-tag">ANTI-HEAL &amp; HEALTH</span>
+                            <h4>Dominance Ice vs Guardian Helmet</h4>
+                        </div>
+                        <div class="decision-body">
+                            <div class="choice-item">
+                                <strong>Dominance Ice</strong>
+                                <p><em>Wajib di 90% Match:</em> Memangkas regen HP/Lifesteal dan menurunkan attack speed musuh di dekatmu hingga 70%.</p>
+                            </div>
+                            <div class="choice-divider">DIPADU DENGAN</div>
+                            <div class="choice-item">
+                                <strong>Guardian Helmet</strong>
+                                <p>Beli jika tim sering war berkepanjangan tanpa waktu recall. Memulihkan HP secara deras saat keluar dari combat.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 06: Checklist Latihan & Evaluasi Match -->
+        <section class="practice-section" id="latihan">
+            <div class="section-wrap practice-layout">
+                <div class="practice-heading">
+                    <p class="eyebrow">06 — EVALUASI &amp; CHECKLIST</p>
+                    <h2>Fokus ke hal yang bisa kamu <span>kendalikan.</span></h2>
+                    <p class="section-intro">Gunakan checklist ini sebelum dan sesudah match. Progresmu tersimpan otomatis di browser agar kamu bisa memantau perkembangan gameplay roamer-mu.</p>
+                    
+                    <div class="progress-wrap" aria-live="polite">
+                        <div class="progress-label">
+                            <span>TINGKAT KESIAPAN ROAMER</span>
+                            <strong id="progress-count">0 / 6</strong>
+                        </div>
+                        <div class="progress-track"><span id="progress-bar"></span></div>
+                        <div class="roamer-rank" id="roamer-rank">
+                            <span class="rank-badge">Tier: Pemula</span>
+                            <small class="rank-subtext">Centang checklist untuk naik pangkat!</small>
+                        </div>
+                    </div>
+
+                    <div class="checklist-actions">
+                        <button type="button" id="btn-reset-checklist" class="button-reset">Reset Checklist ↺</button>
+                        <button type="button" id="btn-copy-eval" class="button-copy">Salin Catatan Match 📋</button>
+                    </div>
+                </div>
+
+                <div class="checklist" aria-label="Checklist latihan roamer MLBB">
+                    <label class="check-item">
+                        <input type="checkbox" class="practice-check" value="minimap">
+                        <span class="custom-check" aria-hidden="true"></span>
+                        <span class="check-copy">
+                            <strong>Pantau minimap setiap 3 detik sekali</strong>
+                            <small>Ketahui posisi jungler dan roamer lawan sebelum memutuskan membuka war.</small>
+                        </span>
+                        <span class="check-number">01</span>
+                    </label>
+
+                    <label class="check-item">
+                        <input type="checkbox" class="practice-check" value="early-info">
+                        <span class="custom-check" aria-hidden="true"></span>
+                        <span class="check-copy">
+                            <strong>Cek start buff jungler lawan di menit 00:30</strong>
+                            <small>Beri sinyal ping ke Gold Lane bila jungler musuh berpotensi rotasi ke arahnya.</small>
+                        </span>
+                        <span class="check-number">02</span>
+                    </label>
+
+                    <label class="check-item">
+                        <input type="checkbox" class="practice-check" value="turtle-zone">
+                        <span class="custom-check" aria-hidden="true"></span>
+                        <span class="check-copy">
+                            <strong>Berada di semak Turtle 15 detik sebelum muncul</strong>
+                            <small>Zoning musuh dari jarak aman dan pastikan jungler tim kamu leluasa retri.</small>
+                        </span>
+                        <span class="check-number">03</span>
+                    </label>
+
+                    <label class="check-item">
+                        <input type="checkbox" class="practice-check" value="item-counter">
+                        <span class="custom-check" aria-hidden="true"></span>
+                        <span class="check-copy">
+                            <strong>Beli item defense sesuai damage dealer terbesar musuh</strong>
+                            <small>Jangan asal pakai default build. Beli Athena vs burst magic, Cuirass vs skill phys, dsb.</small>
+                        </span>
+                        <span class="check-number">04</span>
+                    </label>
+
+                    <label class="check-item">
+                        <input type="checkbox" class="practice-check" value="late-carry">
+                        <span class="custom-check" aria-hidden="true"></span>
+                        <span class="check-copy">
+                            <strong>Late game: Tempel &amp; lindungi damage dealer tim (Peeling)</strong>
+                            <small>Jangan mengejar kill musuh sendirian jika carry timmu ditinggal mati oleh assassin lawan.</small>
+                        </span>
+                        <span class="check-number">05</span>
+                    </label>
+
+                    <label class="check-item">
+                        <input type="checkbox" class="practice-check" value="no-tilt">
+                        <span class="custom-check" aria-hidden="true"></span>
+                        <span class="check-copy">
+                            <strong>Evaluasi 1 keputusan rotasi setelah match selesai</strong>
+                            <small>Tanyakan: Momen mana yang paling merugikan tim, dan bagaimana caraku memperbaikinya?</small>
+                        </span>
+                        <span class="check-number">06</span>
+                    </label>
+
+                    <p class="checklist-status" id="checklist-status" role="status">Pilih checklist untuk mengukur kesiapan tandingmu.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Detail Hero Tank (Interactive Dialog) -->
+    <div class="hero-modal-backdrop" id="hero-modal" role="dialog" aria-modal="true" aria-labelledby="modal-hero-name" hidden>
+        <div class="hero-modal-content">
+            <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Tutup jendela detail hero">×</button>
+            <div id="modal-inner-body">
+                <!-- Injected via JavaScript when a hero is clicked -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Back to Top Button -->
+    <button type="button" id="back-to-top" class="back-to-top" aria-label="Kembali ke atas" title="Kembali ke atas">↑</button>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="footer-left">
+            <a class="brand footer-brand" href="#beranda">
+                <span class="brand-mark" aria-hidden="true">R</span>
+                <span>ROAM<span class="brand-accent">WISE</span></span>
+            </a>
+            <p>Panduan komunitas terlengkap untuk belajar menjadi Roamer dan Hero Tank bermental pemenang di MLBB.</p>
+        </div>
+        <div class="footer-right">
+            <span class="footer-note">MAIN CERDAS. BUKA VISION. MENANG BARENG.</span>
+            <small class="footer-copy">&copy; 2026 Roamwise Community. Asset hero milik Moonton MLBB.</small>
+        </div>
+    </footer>
+</body>
+</html>
+

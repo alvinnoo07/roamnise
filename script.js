@@ -940,6 +940,13 @@ const modalCloseBtn = document.querySelector("#modal-close-btn");
 const modalInnerBody = document.querySelector("#modal-inner-body");
 const soundToggleBtn = document.querySelector("#sound-toggle");
 const backToTopBtn = document.querySelector("#back-to-top");
+const siteMusic = document.querySelector("#site-music");
+const musicPlayBtn = document.querySelector("#music-play-btn");
+const musicPlayIcon = document.querySelector("#music-play-icon");
+const musicStatus = document.querySelector("#music-status");
+const musicVolumeBtn = document.querySelector("#music-volume-btn");
+const musicVolumeIcon = document.querySelector("#music-volume-icon");
+const musicVisualizer = document.querySelector("#music-visualizer");
 
 // State
 let activeSubrole = "all";
@@ -1557,6 +1564,126 @@ if (soundToggleBtn) {
         sfx.toggle();
         updateSoundUI();
         sfx.click();
+    });
+}
+
+// Lagu tema: coba autoplay saat halaman dibuka dan tampilkan visualizer audio.
+if (siteMusic && musicPlayBtn && musicVisualizer) {
+    const visualizerBars = [...musicVisualizer.querySelectorAll("i")];
+    let audioContext = null;
+    let analyser = null;
+    let frequencyData = null;
+    let visualizerFrame = 0;
+    let visualizerConnected = false;
+    const musicPlayer = musicPlayBtn.closest(".music-player");
+
+    const updateMusicUI = () => {
+        const isPlaying = !siteMusic.paused && !siteMusic.ended;
+        musicVisualizer.classList.toggle("is-playing", isPlaying);
+        if (musicPlayer) musicPlayer.classList.toggle("is-playing", isPlaying);
+        if (!isPlaying) {
+            visualizerBars.forEach((bar) => bar.style.setProperty("--bar-level", "0.14"));
+        }
+        musicPlayIcon.textContent = isPlaying ? "❚❚" : "▶";
+        musicPlayBtn.setAttribute("aria-label", isPlaying ? "Jeda lagu" : "Putar lagu");
+        musicPlayBtn.title = isPlaying ? "Jeda lagu" : "Putar lagu";
+
+        if (isPlaying) {
+            musicStatus.textContent = "Sedang diputar";
+        } else if (siteMusic.error) {
+            musicStatus.textContent = "Lagu gagal dimuat";
+        } else if (siteMusic.currentTime > 0) {
+            musicStatus.textContent = "Lagu dijeda";
+        } else {
+            musicStatus.textContent = "Klik putar untuk mendengarkan";
+        }
+    };
+
+    const drawVisualizer = () => {
+        if (!analyser || siteMusic.paused) {
+            visualizerFrame = 0;
+            return;
+        }
+
+        analyser.getByteFrequencyData(frequencyData);
+        const bucketSize = Math.max(1, Math.floor(frequencyData.length / visualizerBars.length));
+
+        visualizerBars.forEach((bar, index) => {
+            const start = index * bucketSize;
+            const end = index === visualizerBars.length - 1 ? frequencyData.length : start + bucketSize;
+            let total = 0;
+            for (let bin = start; bin < end; bin += 1) total += frequencyData[bin];
+            const average = total / Math.max(1, end - start) / 255;
+            const level = Math.max(0.12, Math.min(1, Math.pow(average, 0.72) * 1.8));
+            bar.style.setProperty("--bar-level", level.toFixed(2));
+        });
+
+        visualizerFrame = requestAnimationFrame(drawVisualizer);
+    };
+
+    const connectVisualizer = async () => {
+        if (!visualizerConnected) {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) return;
+
+            audioContext = new AudioContextClass();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 256;
+            analyser.smoothingTimeConstant = 0.78;
+            frequencyData = new Uint8Array(analyser.frequencyBinCount);
+            const source = audioContext.createMediaElementSource(siteMusic);
+            source.connect(analyser);
+            analyser.connect(audioContext.destination);
+            musicVisualizer.classList.add("is-synced");
+            visualizerConnected = true;
+        }
+
+        if (audioContext.state === "suspended") await audioContext.resume();
+        if (!visualizerFrame && !siteMusic.paused) visualizerFrame = requestAnimationFrame(drawVisualizer);
+    };
+
+    musicPlayBtn.addEventListener("click", async () => {
+        if (siteMusic.paused) {
+            try {
+                await connectVisualizer();
+                await siteMusic.play();
+            } catch (error) {
+                musicStatus.textContent = "Klik putar untuk mendengarkan";
+            }
+        } else {
+            siteMusic.pause();
+        }
+        updateMusicUI();
+    });
+
+    if (musicVolumeBtn) {
+        musicVolumeBtn.addEventListener("click", () => {
+            siteMusic.muted = !siteMusic.muted;
+            musicVolumeBtn.setAttribute("aria-pressed", String(siteMusic.muted));
+            musicVolumeBtn.setAttribute("aria-label", siteMusic.muted ? "Nyalakan suara lagu" : "Bisukan lagu");
+            musicVolumeBtn.title = siteMusic.muted ? "Nyalakan suara lagu" : "Bisukan lagu";
+            musicVolumeIcon.textContent = siteMusic.muted ? "🔇" : "🔊";
+        });
+    }
+
+    siteMusic.addEventListener("play", () => {
+        updateMusicUI();
+        if (analyser && !visualizerFrame) visualizerFrame = requestAnimationFrame(drawVisualizer);
+    });
+    siteMusic.addEventListener("pause", updateMusicUI);
+    siteMusic.addEventListener("ended", updateMusicUI);
+    siteMusic.addEventListener("error", updateMusicUI);
+
+    // Inisialisasi analisis audio pada interaksi pertama agar autoplay tetap memakai audio native.
+    const enableSyncedVisualizer = () => {
+        connectVisualizer().catch(() => {});
+    };
+    document.addEventListener("pointerdown", enableSyncedVisualizer, { once: true, passive: true });
+    document.addEventListener("keydown", enableSyncedVisualizer, { once: true });
+
+    siteMusic.play().then(updateMusicUI).catch(() => {
+        musicStatus.textContent = "Klik putar untuk mendengarkan";
+        updateMusicUI();
     });
 }
 

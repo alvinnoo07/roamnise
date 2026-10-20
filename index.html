@@ -603,6 +603,29 @@
     <!-- Floating Back to Top Button -->
     <button type="button" id="back-to-top" class="back-to-top" aria-label="Kembali ke atas" title="Kembali ke atas">↑</button>
 
+    <!-- Musik tema dan visualizer audio -->
+    <section class="music-player" aria-label="Pemutar musik">
+        <audio id="site-music" autoplay loop preload="auto" playsinline>
+            <source src="assets/audio/montagem-santa-fe-2-suka.mp3" type="audio/mpeg">
+        </audio>
+        <button class="music-play-btn" id="music-play-btn" type="button" aria-label="Putar lagu" title="Putar lagu">
+            <span id="music-play-icon" aria-hidden="true">▶</span>
+        </button>
+        <div class="music-player-info">
+            <div class="music-status-row">
+                <span class="music-status-dot" aria-hidden="true"></span>
+                <span class="music-status" id="music-status" role="status" aria-live="polite">Mencoba memutar lagu…</span>
+            </div>
+            <strong class="music-track-title" title="Montagem Santa Fe 2 - Suka..">Montagem Santa Fe 2 - Suka..</strong>
+            <div class="music-visualizer" id="music-visualizer" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+        </div>
+        <button class="music-volume-btn" id="music-volume-btn" type="button" aria-label="Bisukan lagu" aria-pressed="false" title="Bisukan lagu">
+            <span id="music-volume-icon" aria-hidden="true">🔊</span>
+        </button>
+    </section>
+
     <!-- Site Footer -->
     <footer class="site-footer">
         <div class="footer-left">

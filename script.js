@@ -65,7 +65,7 @@ class SoundFX {
 const sfx = new SoundFX();
 
 // ==========================================
-// 1. DATABASE 20 HERO TANK & ROAMER MLBB
+// 1. DATABASE 22 HERO TANK & ROAMER MLBB
 // ==========================================
 const HEROES_DATA = [
     {
@@ -787,6 +787,78 @@ const HEROES_DATA = [
         synergy: ["Layla", "Hanabi", "Odette", "Xavier", "Claude"],
         counters: ["Khufra (Batalkan dash)", "Minsitthar", "Phoveus", "Franco (Suppress)"],
         proTip: "Guiding Wind (Skill 2) bukan cuma untuk kabur! Gunakan S2 ke arah musuh agar marksman atau fighter timmu bisa terbang maju mengejar musuh yang sedang sekarat."
+    },
+    {
+        id: "kaja",
+        name: "Kaja",
+        title: "Nazar King",
+        image: "assets/heroes/kaja.png",
+        role: "Support",
+        subrole: "inisiator",
+        subroleLabel: "Inisiator & Area CC",
+        difficulty: 2,
+        specialty: ["AoE Restraint", "Terrain Mobility", "Teamfight Control"],
+        winCondition: "Terbang melewati terrain dengan Soaring Wings, lalu kunci beberapa hero lewat Divine Binding dan kumpulkan mereka untuk burst tim.",
+        pros: [
+            "Soaring Wings memberi mobilitas tinggi dan bisa melewati terrain untuk membuka sudut gank baru",
+            "Divine Binding dapat menahan dan menarik beberapa hero sekaligus",
+            "Skill Kaja memberi efek Paralysis yang memperlambat lawan dan mengurangi damage mereka"
+        ],
+        cons: [
+            "Butuh timing dan posisi yang tepat agar Divine Binding mengenai banyak target",
+            "Daya tahan tidak setebal tank garis depan jika terkena burst saat membuka war",
+            "Ultimate sangat bergantung pada follow-up damage dari rekan satu tim"
+        ],
+        build: [
+            { name: "Tough Boots (Conceal)", desc: "Mengurangi durasi crowd control dan membantu tim membuka war bersama" },
+            { name: "Dominance Ice", desc: "Menekan attack speed dan pemulihan HP lawan di area ikatan" },
+            { name: "Athena's Shield", desc: "Menahan magic burst saat terbang masuk ke formasi lawan" },
+            { name: "Antique Cuirass", desc: "Meredam physical damage dari hero yang membalas inisiasi" },
+            { name: "Immortality", desc: "Memberi kesempatan kedua setelah masuk ke tengah teamfight" },
+            { name: "Guardian Helmet", desc: "Memulihkan HP saat rotasi dan menyiapkan gank berikutnya" }
+        ],
+        spell: "Flicker",
+        roamBlessing: "Conceal",
+        combo: ["S1 (Ring of Order) untuk poke dan cek area", "S2 (Soaring Wings) terbang melewati terrain", "Ultimate (Divine Binding) kunci area", "Tarik radius untuk kumpulkan lawan dan buka burst tim"],
+        synergy: ["Pharsa", "Odette", "Yve", "Luo Yi", "Gatotkaca"],
+        counters: ["Diggie", "Valir", "Minsitthar", "Hero dengan burst area cepat"],
+        proTip: "Gunakan Soaring Wings untuk masuk dari arah yang tidak terduga. Saat Divine Binding mengenai beberapa hero, tarik radiusnya mengecil agar mereka berkumpul untuk kombo area tim."
+    },
+    {
+        id: "estes",
+        name: "Estes",
+        title: "Moon Elf King",
+        image: "assets/heroes/estes.png",
+        role: "Support",
+        subrole: "protector",
+        subroleLabel: "Protector & Mass Healer",
+        difficulty: 1,
+        specialty: ["Mass Healing", "Sustain War", "Hybrid Defense"],
+        winCondition: "Jaga jarak dekat dengan rekan tim, perlambat lawan dengan S2, lalu pulihkan beberapa ally lewat Ultimate dan Moonlight Immersion.",
+        pros: [
+            "Moonlight Immersion memulihkan HP dan menghubungkan Estes dengan rekan tim",
+            "Blessing of Moon Goddess memperluas efek penyembuhan ke ally di sekitar",
+            "Skill 1 juga memperkuat Hybrid Defense rekan yang terhubung"
+        ],
+        cons: [
+            "Mobilitas rendah dan mudah dikejar assassin jika tertinggal dari tim",
+            "Efek anti-heal dapat mengurangi dampak utama penyembuhannya",
+            "Tidak memiliki hard crowd control untuk menghentikan inisiasi lawan sendirian"
+        ],
+        build: [
+            { name: "Tough Boots (Favor)", desc: "Mengurangi durasi crowd control dan memberi pemulihan ekstra ke ally" },
+            { name: "Flask of the Oasis", desc: "Menambah dukungan shield dan pemulihan saat ally berada dalam bahaya" },
+            { name: "Oracle", desc: "Meningkatkan pemulihan HP dan shield yang diterima Estes" },
+            { name: "Dominance Ice", desc: "Membantu mengurangi pemulihan HP dan attack speed lawan" },
+            { name: "Athena's Shield", desc: "Menahan magic burst yang mengincar Estes di belakang tim" },
+            { name: "Immortality", desc: "Memberi peluang bertahan setelah terkena dive" }
+        ],
+        spell: "Flicker",
+        roamBlessing: "Favor",
+        combo: ["S2 (Domain of Moon Goddess) perlambat lawan", "S1 (Moonlight Immersion) hubungkan carry", "Ultimate (Blessing of Moon Goddess) saat teamfight", "Gunakan S1 lagi untuk memaksimalkan pemulihan tim"],
+        synergy: ["Claude", "Layla", "Fredrinn", "Barats", "Gatotkaca"],
+        counters: ["Baxia", "Dominance Ice", "Sea Halberd", "Glowing Wand", "Assassin yang bisa menyelam ke backline"],
+        proTip: "Tunggu lawan mengeluarkan sebagian burst sebelum memakai Ultimate. Tetap dekat dengan carry agar link heal dan tambahan Hybrid Defense bisa terus membantu mereka."
     }
 ];
 
@@ -935,6 +1007,7 @@ const searchClearBtn = document.querySelector("#search-clear");
 const filterPills = document.querySelectorAll(".filter-pill");
 const diffSelect = document.querySelector("#diff-select");
 const rosterResultCount = document.querySelector("#roster-result-count");
+const allHeroCount = document.querySelector("#count-all");
 const heroModal = document.querySelector("#hero-modal");
 const modalCloseBtn = document.querySelector("#modal-close-btn");
 const modalInnerBody = document.querySelector("#modal-inner-body");
@@ -959,6 +1032,8 @@ let searchQuery = "";
 function renderHeroCards() {
     if (!heroRosterGrid) return;
 
+    if (allHeroCount) allHeroCount.textContent = HEROES_DATA.length;
+
     const filtered = HEROES_DATA.filter((hero) => {
         // Subrole filter
         const matchesSubrole = activeSubrole === "all" || hero.subrole === activeSubrole;
@@ -977,7 +1052,7 @@ function renderHeroCards() {
     });
 
     if (rosterResultCount) {
-        rosterResultCount.textContent = `Menampilkan ${filtered.length} dari ${HEROES_DATA.length} hero tank`;
+        rosterResultCount.textContent = `Menampilkan ${filtered.length} dari ${HEROES_DATA.length} hero tank & roamer`;
     }
 
     if (filtered.length === 0) {
@@ -985,7 +1060,7 @@ function renderHeroCards() {
             <div class="roster-empty">
                 <span class="empty-icon">🛡️</span>
                 <h3>Hero Tidak Ditemukan</h3>
-                <p>Tidak ada hero tank yang cocok dengan kata kunci "<strong>${escapeHtml(searchQuery)}</strong>". Coba kata kunci lain atau reset filter.</p>
+                <p>Tidak ada hero roamer yang cocok dengan kata kunci "<strong>${escapeHtml(searchQuery)}</strong>". Coba kata kunci lain atau reset filter.</p>
                 <button type="button" class="button button-primary" id="btn-reset-filter">Reset Filter</button>
             </div>
         `;
@@ -1567,7 +1642,7 @@ if (soundToggleBtn) {
     });
 }
 
-// Lagu tema: coba autoplay saat halaman dibuka dan tampilkan visualizer audio.
+// Lagu tema dimulai setelah interaksi agar tidak diblokir kebijakan autoplay browser.
 if (siteMusic && musicPlayBtn && musicVisualizer) {
     const visualizerBars = [...musicVisualizer.querySelectorAll("i")];
     let audioContext = null;
@@ -1575,6 +1650,7 @@ if (siteMusic && musicPlayBtn && musicVisualizer) {
     let frequencyData = null;
     let visualizerFrame = 0;
     let visualizerConnected = false;
+    let musicPlaybackError = "";
     const musicPlayer = musicPlayBtn.closest(".music-player");
 
     const updateMusicUI = () => {
@@ -1595,7 +1671,7 @@ if (siteMusic && musicPlayBtn && musicVisualizer) {
         } else if (siteMusic.currentTime > 0) {
             musicStatus.textContent = "Lagu dijeda";
         } else {
-            musicStatus.textContent = "Klik putar untuk mendengarkan";
+            musicStatus.textContent = musicPlaybackError || "Klik putar untuk mulai";
         }
     };
 
@@ -1645,10 +1721,15 @@ if (siteMusic && musicPlayBtn && musicVisualizer) {
     musicPlayBtn.addEventListener("click", async () => {
         if (siteMusic.paused) {
             try {
-                await connectVisualizer();
-                await siteMusic.play();
+                // Request playback synchronously in the click gesture before any await.
+                const playbackRequest = siteMusic.play();
+                musicPlaybackError = "";
+                connectVisualizer().catch(() => musicVisualizer.classList.remove("is-synced"));
+                await playbackRequest;
             } catch (error) {
-                musicStatus.textContent = "Klik putar untuk mendengarkan";
+                musicPlaybackError = error?.name === "NotAllowedError"
+                    ? "Browser memblokir audio. Coba klik putar lagi."
+                    : "Lagu tidak bisa diputar.";
             }
         } else {
             siteMusic.pause();
@@ -1674,17 +1755,7 @@ if (siteMusic && musicPlayBtn && musicVisualizer) {
     siteMusic.addEventListener("ended", updateMusicUI);
     siteMusic.addEventListener("error", updateMusicUI);
 
-    // Inisialisasi analisis audio pada interaksi pertama agar autoplay tetap memakai audio native.
-    const enableSyncedVisualizer = () => {
-        connectVisualizer().catch(() => {});
-    };
-    document.addEventListener("pointerdown", enableSyncedVisualizer, { once: true, passive: true });
-    document.addEventListener("keydown", enableSyncedVisualizer, { once: true });
-
-    siteMusic.play().then(updateMusicUI).catch(() => {
-        musicStatus.textContent = "Klik putar untuk mendengarkan";
-        updateMusicUI();
-    });
+    updateMusicUI();
 }
 
 if (backToTopBtn) {

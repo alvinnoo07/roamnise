@@ -1020,6 +1020,8 @@ const musicStatus = document.querySelector("#music-status");
 const musicVolumeBtn = document.querySelector("#music-volume-btn");
 const musicVolumeIcon = document.querySelector("#music-volume-icon");
 const musicVisualizer = document.querySelector("#music-visualizer");
+const discussionWidget = document.querySelector("#discussion-widget");
+const discussionStatus = document.querySelector("#discussion-status");
 
 // State
 let activeSubrole = "all";
@@ -1756,6 +1758,59 @@ if (siteMusic && musicPlayBtn && musicVisualizer) {
     siteMusic.addEventListener("error", updateMusicUI);
 
     updateMusicUI();
+}
+
+// Shared community comments are stored in the repository's GitHub Discussions.
+if (discussionWidget && discussionStatus) {
+    const loadCommunityDiscussion = async () => {
+        try {
+            const repository = "alvinnoo07/roamnise";
+            const response = await fetch(`https://giscus.app/api/discussions/categories?repo=${encodeURIComponent(repository)}`);
+            if (response.status === 403) {
+                discussionStatus.textContent = "Giscus belum tersambung ke repo. Coba lagi setelah aplikasinya terpasang.";
+                return;
+            }
+            if (response.status === 404) {
+                discussionStatus.textContent = "Ruang diskusi belum siap. Pastikan Discussions dan kategori General sudah aktif.";
+                return;
+            }
+            if (!response.ok) throw new Error("Konfigurasi Giscus belum bisa dimuat.");
+
+            const configuration = await response.json();
+            const category = configuration.categories?.find((item) => item.name === "General");
+            if (!configuration.repositoryId || !category?.id) {
+                discussionStatus.textContent = "Ruang diskusi belum siap. Pastikan Discussions dan kategori General sudah aktif.";
+                return;
+            }
+
+            const giscusScript = document.createElement("script");
+            giscusScript.src = "https://giscus.app/client.js";
+            giscusScript.async = true;
+            giscusScript.crossOrigin = "anonymous";
+            giscusScript.dataset.repo = repository;
+            giscusScript.dataset.repoId = configuration.repositoryId;
+            giscusScript.dataset.category = category.name;
+            giscusScript.dataset.categoryId = category.id;
+            giscusScript.dataset.mapping = "pathname";
+            giscusScript.dataset.strict = "1";
+            giscusScript.dataset.reactionsEnabled = "1";
+            giscusScript.dataset.emitMetadata = "0";
+            giscusScript.dataset.inputPosition = "top";
+            giscusScript.dataset.theme = "dark_dimmed";
+            giscusScript.dataset.lang = "id";
+            giscusScript.addEventListener("load", () => {
+                discussionStatus.hidden = true;
+            }, { once: true });
+            giscusScript.addEventListener("error", () => {
+                discussionStatus.textContent = "Ruang diskusi belum tersambung. Coba lagi nanti.";
+            }, { once: true });
+            discussionWidget.appendChild(giscusScript);
+        } catch (error) {
+            discussionStatus.textContent = "Ruang diskusi belum tersambung. Coba lagi nanti.";
+        }
+    };
+
+    loadCommunityDiscussion();
 }
 
 if (backToTopBtn) {

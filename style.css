@@ -2487,6 +2487,85 @@ h1, h2, h3, h4, h5, p {
     to { transform: scaleY(0.94); }
 }
 
+.discussion-section {
+    padding-top: 84px;
+    padding-bottom: 104px;
+}
+
+.discussion-panel {
+    overflow: hidden;
+    border: 1px solid var(--border-accent);
+    border-radius: 10px;
+    background: linear-gradient(145deg, rgba(23, 27, 22, 0.96), rgba(16, 19, 15, 0.96));
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.22);
+}
+
+.discussion-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 26px;
+    border-bottom: 1px solid var(--border);
+}
+
+.discussion-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+}
+
+.discussion-live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.discussion-guideline {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.discussion-topic {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+}
+
+.discussion-widget {
+    min-height: 320px;
+    padding: 22px 26px 28px;
+}
+
+.discussion-status {
+    margin: 0;
+    padding: 24px;
+    border: 1px dashed var(--border-accent);
+    border-radius: 7px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.giscus-frame {
+    width: 100%;
+    border: 0;
+}
+
 .site-footer {
     display: flex;
     min-height: 90px;
@@ -2846,6 +2925,25 @@ h1, h2, h3, h4, h5, p {
 
     .hero-picks-grid {
         grid-template-columns: 1fr;
+    }
+
+    .discussion-section {
+        padding-top: 60px;
+        padding-bottom: 76px;
+    }
+
+    .discussion-panel-header {
+        align-items: flex-start;
+        padding: 18px;
+    }
+
+    .discussion-topic {
+        display: none;
+    }
+
+    .discussion-widget {
+        min-height: 280px;
+        padding: 16px;
     }
 
     .blessing-grid {

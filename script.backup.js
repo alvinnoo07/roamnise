@@ -1444,7 +1444,7 @@ function updateProgress(playSfx = true) {
     const completed = practiceChecks.filter((check) => check.checked).length;
     const total = practiceChecks.length;
 
-    // Save state to LocalStorage
+    //ini buat nge save ke localStorage biar kalo di refresh ga ilang
     const savedState = practiceChecks.map((c) => ({ val: c.value, checked: c.checked }));
     localStorage.setItem("roamwise_checklist", JSON.stringify(savedState));
 
